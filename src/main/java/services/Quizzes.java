@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by dina on 14/09/2017.
  */
 class Quizzes {
-    private static ArrayList<Quiz> quizzes = new ArrayList<>();
+    private static ArrayList<Quiz> quizzes = new ArrayList();
     private static ScoreBoard s = new ScoreBoard();
 
     public void addQuiz(String quizname, ArrayList<Question> questions){
