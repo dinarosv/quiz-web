@@ -2,25 +2,35 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by dina on 14/09/2017.
  */
-class Quizzes {
-    private static ArrayList<Quiz> quizzes = new ArrayList();
-    private static ScoreBoard s = new ScoreBoard();
+@Path("/quizzes/")
+public class Quizzes {
+    private static HashMap<String, Quiz> quizzes = new HashMap<String, Quiz>();
+    private static HashMap<String, ScoreBoard> s = new HashMap<String, ScoreBoard>();
 
-    public void addQuiz(String quizname, ArrayList<Question> questions){
-        Quiz q = new Quiz(quizname);
-        for(int i=0; i<questions.size(); i++){
-            q.addQuestion(questions.get(i));
-        }
-        quizzes.add(q);
+    public Quizzes(){}
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addQuiz(Quiz q){
+        quizzes.put(q.getQuizName(), q);
     }
-    public void joinQuiz(String brukernavn, Quiz q){
-        q.addBruker(brukernavn);
+    @POST
+    @Path("/{quizname}/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addQuestion(@PathParam("quizname") String quizname, Question q){
+        quizzes.get(quizname).addQuestion(q);
     }
-    public ArrayList<Scores> getScores(Quiz q){
-        return s.getScoresForQuiz(q);
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public HashMap<String, Quiz> getQuizzes(){
+        return quizzes;
     }
 }

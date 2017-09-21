@@ -12,17 +12,16 @@ import java.util.Date;
 public class Question {
     private String question;
     private ArrayList<Answer> answers = new ArrayList<Answer>();
-    private double tidsangivelse;
-
     BufferedImage img;
 
-    public Question(String question, double tidsangivelse) {
+    public Question(String question) {
         this.question = question;
-        this.tidsangivelse = tidsangivelse;
     }
+    public Question(){}
     public String getQuestion() {
         return question;
     }
+
     public void addAnswer(String answer, boolean correct){
         answers.add(new Answer(answer, correct));
     }
