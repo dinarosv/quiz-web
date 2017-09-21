@@ -4,15 +4,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
-/**
- * Created by dina on 14/09/2017.
- */
 public class Question {
     private String question;
     private ArrayList<Answer> answers = new ArrayList<Answer>();
-    BufferedImage img;
+    private BufferedImage img = null;
 
     public Question(String question) {
         this.question = question;
@@ -22,8 +18,8 @@ public class Question {
         return question;
     }
 
-    public void addAnswer(String answer, boolean correct){
-        answers.add(new Answer(answer, correct));
+    public void addAnswer(String answer){
+        answers.add(new Answer(answer));
     }
     public boolean validQuestion(){
         if (answers.size() >=2){
@@ -42,5 +38,8 @@ public class Question {
             System.out.println("Not okay IO");
             return false;
         }
+    }
+    public BufferedImage getImg(){
+        return img;
     }
 }

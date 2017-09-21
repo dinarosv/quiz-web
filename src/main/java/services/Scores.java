@@ -6,14 +6,12 @@ package services;
 class Scores {
     private String brukernavn;
     private double score;
-    private Quiz quiz;
 
-    public Scores(String brukernavn, double score, Quiz quiz) {
+    public Scores(String brukernavn, double score) {
         this.brukernavn = brukernavn;
         this.score = score;
-        this.quiz = quiz;
     }
-
+    public Scores(){}
     public String getBrukernavn() {
         return brukernavn;
     }
@@ -22,7 +20,4 @@ class Scores {
         return score;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
 }

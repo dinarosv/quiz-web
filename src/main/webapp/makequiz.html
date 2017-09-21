@@ -34,12 +34,12 @@
     <br>
     <form>
         <div class="form-group">
-            <label for="quizname">Quiznavn</label>
-            <input type="text" class="form-control" id="quizname" aria-describedby="quizname" placeholder="Oppgi quizname">
+            <label for="quizName">Quiznavn</label>
+            <input type="text" class="form-control" id="quizName" aria-describedby="quizName" placeholder="Oppgi quizname">
         </div>
         <div class="form-group">
             <label for="time">Starttidspunkt</label>
-            <input type="text" class="form-control" id="time" aria-describedby="time" placeholder="15:30">
+            <input  class="form-control"  type="datetime-local" id="time">
         </div>
         <div class="form-group">
             <label for="tidperspors">Tid per spørsmål (i sekunder)</label>
@@ -50,54 +50,70 @@
         <br>
         <div id="sprs" class="container"></div>
         <button type="button" id="leggtil" class="btn btn-warning">Legg til spørsmål</button>
-        <button type="submit" id="submit" class="btn btn-warning">Ferdig!</button>
+        <button type="button" id="submit" class="btn btn-warning">Ferdig!</button>
     </form>
 </div>
 
 <script>
-    var teller=0;
-    $('#leggtil').click(function(){
-        teller++;
-        $('#sprs').append('<div class="form-group">'+
-                '<h6>Spørsmål nr. ' + teller + '</h6>'+
-                '<label for="question">Spørsmål</label>'+
-                '<input type="text" class="form-control" id="question" aria-describedby="question" placeholder="Spørsmål">'+
-                '</div> <div class="form-group"> <label for="q1">Svar 1</label> <input type="text" class="form-control" id="q1" aria-describedby="q1">'+
-                '</div>  <div class="form-group">  <label for="q2">Svar 2</label>'+
-                '<input type="text" class="form-control" id="q2" aria-describedby="q2">'+
-                '</div> <div class="form-group"> <label for="q3">Svar 3</label> <input type="text" class="form-control" id="q3" aria-describedby="q3">'+
-                '</div> <div class="form-group"> <label for="q4">Svar 4</label> <input type="text" class="form-control" id="q4" aria-describedby="q4">'+
-                '</div> Riktig alternativ: <div class="form-check form-check-inline"> <label class="form-check-label">'+
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> 1'+
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2'+
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3 </label>'+
-                '</div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option3"> 4'+
+    $(document).ready(function() {
+        var teller = 0;
+        $('#leggtil').click(function () {
+            teller++;
+            $('#sprs').append('<div class="form-group">' +
+                '<h6>Spørsmål nr. ' + teller + '</h6>' +
+                '<label for="question">Spørsmål</label>' +
+                '<input type="text" class="form-control" id="sprs' + teller + '" aria-describedby="question" placeholder="Spørsmål">' +
+                '</div> <div class="form-group"> <label for="q1">Svar 1</label> <input type="text" class="form-control" id="q1' + teller + '" aria-describedby="q1">' +
+                '</div>  <div class="form-group">  <label for="q2' + teller + '">Svar 2</label>' +
+                '<input type="text" class="form-control" id="q2' + teller + '" aria-describedby="q2">' +
+                '</div> <div class="form-group"> <label for="q3">Svar 3</label> <input type="text" class="form-control" id="q3' + teller + '" aria-describedby="q3">' +
+                '</div> <div class="form-group"> <label for="q4">Svar 4</label> <input type="text" class="form-control" id="q4' + teller + '" aria-describedby="q4">' +
+
+                '</div> Riktig alternativ: <div class="form-check form-check-inline"> <label class="form-check-label">' +
+                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '1" value="option1" checked> 1' +
+                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '2" value="option2"> 2' +
+                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '3" value="option3"> 3 </label>' +
+                '</div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '4" value="option3"> 4' +
                 '</label></div>');
 
         });
-    $("#submit").click(function () {
-        $.ajax({
-            url: 'rest/quizzes',
-            type: 'POST',
-            data: JSON.stringify({
-                quizname: $("#quizname").val(),
-                time: $("#time").val()
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function() {
-                alert("OK!");
-            },
-            error: function(result) {
-                alert("NOT OKAY");
-            }
-        });
-        $.ajax({
-            url: 'rest/quizzes/quizname',
-            type: 'POST',
-            data: JSON.stringify({
-
-            })
+        $("#submit").click(function () {
+            $.ajax({
+                url: 'rest/quizzes',
+                type: 'POST',
+                data: JSON.stringify({
+                    quizName: $("#quizName").val(),
+                    time: $("#time").val()
+                }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json'
+            });
+            /*for (var i = 0; i <= teller; i++) {
+                $.ajax({
+                    url: 'rest/quizzes/' + $("#quizName").val(),
+                    type: 'POST',
+                    data: JSON.stringify({
+                        question: $("#sprs+i").val()
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function () {
+                        alert("OK");
+                    }
+                });
+                for (var j = 0; j < 4; j++) {
+                    $.ajax({
+                        url: 'rest/quizzes/' + $("#quizName").val() + '/' + $("#sprs+i").val(),
+                        type: 'POST',
+                        data: JSON.stringify({
+                            answer: $("#sprs+i").val()
+                        }),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json'
+                    });
+                }
+            }*/
+            window.location.href = 'quizliste.html';
         });
     });
 </script>

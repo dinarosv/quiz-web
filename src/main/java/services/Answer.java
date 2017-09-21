@@ -7,10 +7,11 @@ public class Answer {
     public String answer;
     public boolean correct;
 
-    public Answer(String answer, boolean correct) {
+    public Answer(String answer) {
         this.answer = answer;
-        this.correct = correct;
+        //this.correct = correct;
     }
+    public Answer(){}
 
     public String getAnswer() {
         return answer;

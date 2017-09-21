@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quizzes: Venteside</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+        <img src="image.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        QUIZZES
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="quizliste.html">Play quiz <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="makequiz.html">Make quiz</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <h5 id="h5">Tid til start:</h5>
+    <table id="myTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Brukernavn</th>
+        </tr>
+        </thead>
+    </table>
+    <input id="nick" type="text" value="nick">
+    <button id="createnick">Create New</button><br>
+</div>
+<script>
+
+    $(document).ready(function() {
+        $.get("rest/quizzes/nn", function(data){
+            window.setInterval(function(){
+                var quizTime = new Date(data);
+                var thisTime = new Date();
+                var time =  quizTime.getTime() - thisTime.getTime();
+
+                if(time > 2629746000){
+                    var timeformat = "Over en måned igjen";
+                }else if(time > 86400000){
+                    var timeformat = "Over en dag igjen ";
+                }else if(time > 3600000){
+                    var timeformat = "Over en time igjen ";
+                }else{
+                    var sek = (time / 1000) % 60 ;
+                    var min = ((time / (1000*60)) % 60);
+                    if(sek.toFixed(0)==60){
+                        sek=0;
+                    }
+                    var timeformat = min.toFixed(0) + " minutter og "+sek.toFixed(0) + " sekunder";
+                }
+                $("#h5").text("Tid til start: " + timeformat);
+
+            }, 1000);
+        });
+        function kjorQuiz() {
+            window.location.href='question.html';
+        }
+        $('#myTable').DataTable({
+            ajax: {
+                url: 'rest/quizzes/bruker/nn',
+                dataSrc: ''
+            },
+            columns: [
+                {data: 'nicks'}
+            ]
+        });
+        // Lag ny rest-ressursen under '/kunder/'
+        $("#createnick").click(function () {
+            $.ajax({
+                url: 'rest/quizzes/bruker/nn',
+                type: 'POST',
+                data: JSON.stringify({
+                    nick: $("#nick").val()
+                }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(result) {
+                    $('#myTable').DataTable().ajax.reload();
+                }
+            });
+        });
+        var href = window.document.URL;
+        var del = href.split('?')[1];
+        var navn = del.split('=')[1];
+    });
+</script>
+</body>
+</html>
