@@ -5,7 +5,7 @@ package services;
  */
 public class Answer {
     public String answer;
-    public boolean correct;
+    //public boolean correct;
 
     public Answer(String answer) {
         this.answer = answer;
@@ -17,7 +17,7 @@ public class Answer {
         return answer;
     }
 
-    public boolean isCorrect() {
+    /*public boolean isCorrect() {
         return correct;
-    }
+    }*/
 }

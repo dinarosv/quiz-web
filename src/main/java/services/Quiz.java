@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Quiz {
-    private String quizName;
-    private static HashMap<String, String> nicks = new HashMap<String, String>();
-    private String time;
+    private  String quizName;
+    private  HashMap<String, Nick> nicks = new HashMap<String, Nick>();
+    private  String time;
 
     private HashMap<String, Scores> scoreBoard = new HashMap<String, Scores>();
     private HashMap<String, Question> questions;
@@ -39,19 +39,18 @@ public class Quiz {
         return questions;
     }
     public void addQuestion(Question q){
-        if(q.validQuestion()){
-            questions.put(q.getQuestion(), q);
-        }
+        questions.put(q.getQuestion(), q);
     }
 
     public String getNick(String nick){
-        return nicks.get(nick);
+        return nicks.get(nick).getNick();
     }
-    public HashMap<String, String> getNicks() {
+    public HashMap<String, Nick> getNicks() {
         return nicks;
     }
+
     public void addNick(String nick){
-        nicks.put(nick, nick);
+        nicks.put(nick, new Nick(nick));
     }
     /*
     Date d = new Date();

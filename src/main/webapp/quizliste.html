@@ -49,7 +49,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            var table = $('#myTable').DataTable({
+            $('#myTable').DataTable({
                 ajax: {
                     url: 'rest/quizzes',
                     dataSrc: ''
@@ -57,12 +57,40 @@
                 columns: [
                     {data: 'quizName'},
                     {data: 'time'},
-                    {"mRender": function(quizName) {
-                        return '<a class="btn btn-info btn-sm" href=Venteside.html?qn=>' + 'Play quiz!' + '</a>';
+                    {"mRender": function(data) {
+                        return '<button class="btn btn-info btn-sm" onclick="clicked(this)">' + 'Play quiz!' + '</button>';
                     }}
                 ]
             });
         });
+        function clicked(a){
+            var nick;
+            var person = prompt("Enter nickname:", "Nickname");
+            if (person == null || person == "") {
+                alert("Ikke gyldig nick");
+            } else {
+                nick = person;
+                var quizName = $(a).parent().parent().find(".sorting_1").html();
+                $.ajax({
+                    url: 'rest/quizzes/bruker/'+quizName,
+                    type: 'POST',
+                    data: JSON.stringify({
+                        nick: nick
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function () {
+                        alert("OK");
+                    },
+                    error: function(evt){
+                        console.log(evt);
+                    }
+                });
+                window.location = "Venteside.html?qn=" + quizName + "&br=" + nick;
+            }
+
+
+        }
     </script>
 </body>
 </html>

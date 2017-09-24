@@ -16,13 +16,14 @@ public class Quizzes {
     }
 
     @POST
-    @Path("/{quizName}")
+    @Path("{quizName}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void addQuestion(@PathParam("quizName") String quizname, Question q){
         quizzes.get(quizname).addQuestion(q);
     }
+
     @POST
-    @Path("/{quizName}/{question}")
+    @Path("{quizName}/{question}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void addAnswer(@PathParam("quizName") String quizName, @PathParam("question") String question, String answer){
         quizzes.get(quizName).getQuestion(question).addAnswer(answer);
@@ -32,14 +33,15 @@ public class Quizzes {
     @Produces(MediaType.APPLICATION_JSON) public Collection<Quiz> getQuizzes(){
         return quizzes.values();
     }
+
     @GET
-    @Path("/{quizName}")
+    @Path("{quizName}")
     @Produces(MediaType.TEXT_PLAIN) public String getTime(@PathParam("quizName") String quizName){
         return quizzes.get(quizName).getTime();
     }
     @GET
     @Path("bruker/{quizName}")
-    @Produces(MediaType.APPLICATION_JSON) public Collection<String> getNicks(@PathParam("quizName") String quizName){
+    @Produces(MediaType.APPLICATION_JSON) public Collection<Nick> getNicks(@PathParam("quizName") String quizName){
         return quizzes.get(quizName).getNicks().values();
     }
     @POST

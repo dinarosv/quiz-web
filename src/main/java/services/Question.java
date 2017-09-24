@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Question {
     private String question;
     private ArrayList<Answer> answers = new ArrayList<Answer>();
-    private BufferedImage img = null;
+    //private BufferedImage img = null;
 
     public Question(String question) {
         this.question = question;
@@ -16,6 +16,18 @@ public class Question {
     public Question(){}
     public String getQuestion() {
         return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<Answer> answers) {
+        this.answers = answers;
     }
 
     public void addAnswer(String answer){
@@ -27,7 +39,7 @@ public class Question {
         }
         return false;
     }
-    public boolean addImage(String link){
+    /*public boolean addImage(String link){
         try{
             img = ImageIO.read(new URL(link));
             return true;
@@ -41,5 +53,5 @@ public class Question {
     }
     public BufferedImage getImg(){
         return img;
-    }
+    }*/
 }
