@@ -11,42 +11,63 @@ public class Quizzes {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addQuiz(Quiz q){
-        quizzes.put(q.getQuizName(), q);
+    public void addQuiz(Quiz quiz){
+        quizzes.put(quiz.getQuizName(), quiz);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Quiz> getQuizzes(){
+        return quizzes.values();
     }
 
     @POST
     @Path("{quizName}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addQuestion(@PathParam("quizName") String quizname, Question q){
-        quizzes.get(quizname).addQuestion(q);
+    public void addQuestion(@PathParam("quizName") String quizName, Question question){
+        quizzes.get(quizName).addQuestion(question);
+    }
+
+    @GET
+    @Path("{quizName}")
+    @Produces(MediaType.APPLICATION_JSON) public Collection<Question> getQuestions(@PathParam("quizName") String quizName){
+        return quizzes.get(quizName).getQuestions().values();
     }
 
     @POST
     @Path("{quizName}/{question}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addAnswer(@PathParam("quizName") String quizName, @PathParam("question") String question, String answer){
+    public void addAnswer(@PathParam("quizName") String quizName, @PathParam("question") String question, Answer answer){
         quizzes.get(quizName).getQuestion(question).addAnswer(answer);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON) public Collection<Quiz> getQuizzes(){
-        return quizzes.values();
+    @POST
+    @Path("bruker/{quizName}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addNick(@PathParam("quizName") String quizName, Nick nick){
+        quizzes.get(quizName).addNick(nick);
     }
 
     @GET
-    @Path("{quizName}")
-    @Produces(MediaType.TEXT_PLAIN) public String getTime(@PathParam("quizName") String quizName){
-        return quizzes.get(quizName).getTime();
-    }
-    @GET
     @Path("bruker/{quizName}")
-    @Produces(MediaType.APPLICATION_JSON) public Collection<Nick> getNicks(@PathParam("quizName") String quizName){
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<Nick> getNicks(@PathParam("quizName") String quizName){
         return quizzes.get(quizName).getNicks().values();
     }
-    @POST
-    @Path("bruker/{quizName}")
-    @Consumes(MediaType.APPLICATION_JSON) public void addNick(@PathParam("quizName") String quizName, String nick){
-        quizzes.get(quizName).addNick(nick);
+
+    @GET
+    @Path("time/{quizName}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getTime(@PathParam("quizName") String quizName){
+        return quizzes.get(quizName).getTime();
     }
+
+    @GET
+    @Path("tid/{quizName}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getTpq(@PathParam("quizName") String quizName){
+        return quizzes.get(quizName).getTpq();
+    }
+
+
 }

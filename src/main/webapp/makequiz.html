@@ -39,11 +39,11 @@
         </div>
         <div class="form-group">
             <label for="time">Starttidspunkt</label>
-            <input class="form-control"  type="datetime-local" id="time">
+            <input class="form-control" type="datetime-local" id="time">
         </div>
         <div class="form-group">
-            <label for="tidperspors">Tid per spørsmål (i sekunder)</label>
-            <select class="form-control" id="tidperspors">
+            <label for="tpq">Tid per spørsmål (i sekunder)</label>
+            <select class="form-control" id="tpq">
                 <option>10</option><option>20</option><option>30</option>
             </select>
         </div>
@@ -56,21 +56,21 @@
     $(document).ready(function() {
         $("#submit").click(function () {
             $.ajax({
-                url: 'rest/quizzes',
+                url: 'rest/quizzes/',
                 type: 'POST',
                 data: JSON.stringify({
-                    quizName: quizName,
-                    time: $("#time").val()
+                    quizName: $("#quizName").val(),
+                    time: $("#time").val(),
+                    tpq: $("#tpq").val()
                 }),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function () {
-                    alert("OK");
+                    window.location.href = 'makeQuestions.html?qn='+$("#quizName").val();
                 },
                 error: function (evt) {
                     console.log(evt);
                 }
-
             });
         });
     });

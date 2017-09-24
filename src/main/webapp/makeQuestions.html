@@ -30,106 +30,89 @@
         </ul>
     </div>
 </nav>
-<div id="sprs" class="container"></div>
+<div class="container">
+<div id="sprs" class="form">
+    <br>
+    <h5>Make questions</h5>
+    <div class="form-group">
+        <h6>Spørsmål nr. 1</h6>
+        <label for="sprs1">Spørsmål</label><input type="text" class="form-control" id="sprs1"></div>
+    <div class="form-group"> <label for="q11">Svar 1</label> <input type="text" class="form-control" id="q11"></div>
+    <div class="form-group"> <label for="q21">Svar 2</label> <input type="text" class="form-control" id="q21"></div>
+    <div class="form-group"> <label for="q31">Svar 3</label> <input type="text" class="form-control" id="q31"></div>
+    <div class="form-group"> <label for="q41">Svar 4</label> <input type="text" class="form-control" id="q41"></div>
+     Riktig alternativ:
+    <div class="form-check form-check-inline">
+        <label class="form-check-label"><input class="form-check-input" type="radio" name="inlineRadioOptions" id="11" value="option1" checked> 1 </label></div>
+    <div class="form-check form-check-inline">
+        <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="12" value="option2"> 2 </label></div>
+    <div class="form-check form-check-inline">
+        <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="13" value="option3"> 3 </label></div>
+    <div class="form-check form-check-inline">
+        <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="14" value="option4">  4 </label></div>
+</div>
+    <br>
 <button type="button" id="leggtil" class="btn btn-warning">Legg til spørsmål</button>
+    <button type="button" id="submit" class="btn btn-warning">Ferdig</button>
+</div>
 <script>
     $(document).ready(function() {
-        var teller = 0;
+        var href = window.document.URL;
+        var del = href.split('?')[1];
+        var navn = del.split('=')[1];
+        var quizName = navn.split('&')[0];
+
+        var teller = 1;
         $('#leggtil').click(function () {
             teller = teller + 1;
-            $('#sprs').append('<div class="container">' +
-                '<h6>Spørsmål nr. ' + teller + '</h6>' +
+            $('#sprs').append(
+                '<br><br><h6>Spørsmål nr. ' + teller + '</h6>' +
                 '<label for="question">Spørsmål</label>' +
-                '<input type="text" class="form-control" id="sprs' + teller + '" aria-describedby="question" placeholder="Spørsmål">' +
-                '</div> <div class="form-group"> <label for="q1">Svar 1</label> <input type="text" class="form-control" id="q1' + teller + '" aria-describedby="q1">' +
-                '</div>  <div class="form-group">  <label for="q2' + teller + '">Svar 2</label>' +
-                '<input type="text" class="form-control" id="q2' + teller + '" aria-describedby="q2">' +
-                '</div> <div class="form-group"> <label for="q3">Svar 3</label> <input type="text" class="form-control" id="q3' + teller + '" aria-describedby="q3">' +
-                '</div> <div class="form-group"> <label for="q4">Svar 4</label> <input type="text" class="form-control" id="q4' + teller + '" aria-describedby="q4">' +
+                '<input type="text" class="form-control" id="sprs' + teller + '" placeholder="Spørsmål">' +
+                '<div class="form-group"> <label>Svar 1</label> <input type="text" class="form-control" id="q1' + teller + '">' +
+                '</div>  <div class="form-group">  <label>Svar 2</label>' +
+                '<input type="text" class="form-control" id="q2' + teller + '">' +
+                '</div> <div class="form-group"> <label>Svar 3</label> <input type="text" class="form-control" id="q3' + teller + '">' +
+                '</div> <div class="form-group"> <label>Svar 4</label> <input type="text" class="form-control" id="q4' + teller + '">' +
 
                 '</div> Riktig alternativ: <div class="form-check form-check-inline"> <label class="form-check-label">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '1" value="option1" checked> 1' +
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '2" value="option2"> 2' +
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '3" value="option3"> 3 </label>' +
-                '</div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions" id="' + teller + '4" value="option3"> 4' +
+                '<input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '1" value="option1" checked> 1' +
+                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '2" value="option2"> 2' +
+                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '3" value="option3"> 3 </label>' +
+                '</div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '4" value="option4"> 4' +
                 '</label></div>');
 
         });
+        $("#submit").click(function(){
+            for (var i = 1; i <= teller; i++) {
+                var question = $("#sprs"+i).val();
+                $.ajax({
+                    url: 'rest/quizzes/' + quizName,
+                    type: 'POST',
+                    data: JSON.stringify({
+                        question: question
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json'
+                });
+                for(var j=1; j<=4; j++){
+                    var answer = $("#q"+j+i).val();
+                    var correct = $("#"+i+j).checked;
+                    $.ajax({
+                        url: 'rest/quizzes/' + quizName + '/' + question,
+                        type: 'POST',
+                        data: JSON.stringify({
+                            answer: answer,
+                            correct: correct
+                        }),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json'
+                    });
+                }
+            }
+            window.location.href="quizliste.html";
+        });
     });
-    for (var i = 0; i < teller; i++) {
-        alert("Gikk inn i løkke");
-        var sprs = $("#sprs+i").val();
-        $.ajax({
-            url: 'rest/quizzes/' + quizName,
-            type: 'POST',
-            data: JSON.stringify({
-                question: sprs
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function () {
-                alert("OK spørsmål");
-            }, error: function (res) {
-                alert(res);
-            }
-        });
-        var ansr = $("#q1+i");
-        $.ajax({
-            url: 'rest/quizzes/' + quizName + '/' + sprs,
-            type: 'POST',
-            data: JSON.stringify({
-                answer: ansr
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function () {
-                alert("OK svar1");
-            }, error: function (res) {
-                alert(res);
-            }
-        });
-        ansr = $("#q2+i");
-        $.ajax({
-            url: 'rest/quizzes/' + quizName + '/' + sprs,
-            type: 'POST',
-            data: JSON.stringify({
-                answer: ansr
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function () {
-                alert("OK svar2");
-            }
-        });
-        ansr = $("#q3+i");
-        $.ajax({
-            url: 'rest/quizzes/' + quizName + '/' + sprs,
-            type: 'POST',
-            data: JSON.stringify({
-                answer: ansr
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function () {
-                alert("OK svar3");
-            },
-            error: function (res) {
-                alert(res);
-            }
-        });
-        ansr = $("#q4+i");
-        $.ajax({
-            url: 'rest/quizzes/' + quizName + '/' + sprs,
-            type: 'POST',
-            data: JSON.stringify({
-                answer: ansr
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
-        });
-        alert("ut av løkke");
-        //window.location.href = 'quizliste.html';
-    }
 </script>
 </body>
 </html>

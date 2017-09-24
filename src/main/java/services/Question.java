@@ -4,10 +4,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Question {
     private String question;
-    private ArrayList<Answer> answers = new ArrayList<Answer>();
+    private HashMap<String, Answer> answers = new HashMap<String, Answer>();
     //private BufferedImage img = null;
 
     public Question(String question) {
@@ -22,16 +23,19 @@ public class Question {
         this.question = question;
     }
 
-    public ArrayList<Answer> getAnswers() {
+    public HashMap<String, Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<Answer> answers) {
+    public void setAnswers(HashMap<String, Answer> answers) {
         this.answers = answers;
     }
 
-    public void addAnswer(String answer){
-        answers.add(new Answer(answer));
+    public void addAnswer(Answer a){
+        answers.put(a.getAnswer(), a);
+    }
+    public Answer getAnswer(String answer){
+        return answers.get(answer);
     }
     public boolean validQuestion(){
         if (answers.size() >=2){

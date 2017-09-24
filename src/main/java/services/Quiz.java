@@ -4,58 +4,69 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Quiz {
-    private  String quizName;
-    private  HashMap<String, Nick> nicks = new HashMap<String, Nick>();
-    private  String time;
-
+    private String quizName;
+    private String time;
+    private String tpq; //Time per question
+    private HashMap<String, Nick> nicks = new HashMap<String, Nick>();
+    private HashMap<String, Question> questions = new HashMap<String, Question>();
     private HashMap<String, Scores> scoreBoard = new HashMap<String, Scores>();
-    private HashMap<String, Question> questions;
 
-    public Quiz(String quizName, String time){
+    public Quiz(String quizName, String time, String tpq){
         this.quizName = quizName;
         this.time = time;
+        this.tpq = tpq;
     }
     public Quiz(){
     }
-    public void setTime(String time){
-        this.time = time;
 
-    }
     public String getTime(){
         return time.split("T")[0] + " " + time.split("T")[1];
     }
+    public void setTime(String time){
+        this.time = time;
+    }
+
     public String getQuizName() {
         return quizName;
-    }
-    public Question getQuestion(String name){
-        return questions.get(name);
     }
     public void setQuizName(String quizName) {
         this.quizName = quizName;
     }
 
-
-    public HashMap<String, Question> getQuestions() {
-        return questions;
+    public Question getQuestion(String name){
+        return questions.get(name);
     }
     public void addQuestion(Question q){
         questions.put(q.getQuestion(), q);
     }
 
+    public HashMap<String, Question> getQuestions() {
+        return questions;
+    }
+    public void setQuestions(HashMap<String, Question> questions){
+        this.questions = questions;
+    }
+
     public String getNick(String nick){
         return nicks.get(nick).getNick();
     }
+    public void addNick(Nick nick){
+        nicks.put(nick.getNick(), nick);
+    }
+
     public HashMap<String, Nick> getNicks() {
         return nicks;
     }
+    public void setNicks(HashMap<String, Nick> nicks){ this.nicks = nicks;}
 
-    public void addNick(String nick){
-        nicks.put(nick, new Nick(nick));
+    public void setTpq(String tpq){
+        this.tpq = tpq;
     }
-    /*
-    Date d = new Date();
-        int timer = Integer.parseInt(time.substring(0,time.indexOf(':')));
-        int min = Integer.parseInt(time.substring(time.indexOf(':')+1, time.length()));
-        this.starttidspunkt = new Date(d.getYear(), d.getMonth(), d.getDate(), timer,min, 0);
-     */
+    public String getTpq(){
+        return tpq;
+    }
+
+    public void setScoreBoard(HashMap<String, Scores> scoreBoard){ this.scoreBoard = scoreBoard; }
+    public HashMap<String, Scores> getScoreBoard(){return scoreBoard;}
+
 }

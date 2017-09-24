@@ -44,19 +44,17 @@
             </tr>
             </thead>
         </table>
+        <button id="goquiz">Kjør Quiz</button>
     </div>
     <script>
-
         $(document).ready(function() {
             var href = window.document.URL;
             var del = href.split('?')[1];
             var navn = del.split('=')[1];
             var quizname = navn.split('&')[0];
-            alert(quizname);
-            $.get("rest/quizzes/"+quizname, function(data){
+            $.get("rest/quizzes/time/"+quizname, function(data){
                 window.setInterval(function(){
                     var quizTime = new Date(data);
-
                     var thisTime = new Date();
                     var milli =  quizTime.getTime() - thisTime.getTime();
                     var timeformat = "--";
@@ -77,17 +75,18 @@
                         if(sek.toFixed(0)==60){
                             sek=0;
                         }
-                        timeformat = min.toFixed(0) + " minutter og "+sek.toFixed(0) + " sekunder";
+                        timeformat = min.toFixed(0) + " minutter og "+ sek.toFixed(0) + " sekunder";
                     }
                     if(milli == 0){
                         kjorQuiz();
                     }
                     $("#h5").text("Tid til start: " + timeformat);
-
                 }, 1000);
             });
             function kjorQuiz() {
-                window.location = "Question.html?qn=" + quizname;// + "&br="; OG BRUKERNAVN
+                var brukerlinje = del.split('&')[1];
+                var bruker = brukerlinje.split('=')[1];
+                window.location = "Questions.html?qn=" + quizname + "&br=" + bruker + "&numb=1";
             }
 
             $('#myTable').DataTable({
@@ -98,6 +97,9 @@
                 columns: [
                     {data: 'nick'}
                 ]
+            });
+            $("#goquiz").click(function() {
+                kjorQuiz();
             });
         });
     </script>

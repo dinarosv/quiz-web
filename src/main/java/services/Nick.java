@@ -4,7 +4,7 @@ package services;
  * Created by dina on 22/09/2017.
  */
 public class Nick {
-    private  String nick;
+    private String nick;
 
     public Nick(){}
 
