@@ -69,7 +69,6 @@ $(document).ready(function() {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json'
         });
-
-        window.location.href="quizliste.html";
+        window.location.href = "quizliste.html";
     });
 });

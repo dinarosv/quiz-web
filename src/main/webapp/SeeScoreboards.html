@@ -47,6 +47,7 @@
         </tr>
         </thead>
     </table>
+    <p>Trykk på en av quizzene for å se topscores</p>
 </div>
 <script>
     var navn;
@@ -57,7 +58,7 @@
                     var quiz = data[p];
                     navn = quiz.quizName;
                     var tidspunkt = quiz.time;
-                    $("#myTable").append('<tr onclick="klikket(\''+navn+'\')"><th>'+navn+'</th><th>'+tidspunkt+'</th></tr>');
+                    $("#myTable").append('<tr onclick="klikket(\''+navn+'\')"><td>'+navn+'</td><td>'+tidspunkt+'</td></tr>');
                 }
             }
         });
