@@ -1,61 +1,43 @@
 package services;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Question {
     private String question;
-    private HashMap<String, Answer> answers = new HashMap<String, Answer>();
-    //private BufferedImage img = null;
+    private int correctanswer;
+    private String[] answers;
+    private String url;
 
-    public Question(String question) {
+    public Question(String question, int correctanswer, String[] answers) {
         this.question = question;
+        this.correctanswer = correctanswer;
+        this.answers = answers;
     }
     public Question(){}
     public String getQuestion() {
         return question;
     }
-
     public void setQuestion(String question) {
         this.question = question;
     }
 
-    public HashMap<String, Answer> getAnswers() {
+    public String[] getAnswers() {
         return answers;
     }
-
-    public void setAnswers(HashMap<String, Answer> answers) {
+    public void setAnswers(String[] answers){
         this.answers = answers;
     }
 
-    public void addAnswer(Answer a){
-        answers.put(a.getAnswer(), a);
+    public void setCorrectanswer(int correctanswer){
+        this.correctanswer = correctanswer;
     }
-    public Answer getAnswer(String answer){
-        return answers.get(answer);
+    public int getCorrectanswer(){
+        return correctanswer;
     }
-    public boolean validQuestion(){
-        if (answers.size() >=2){
-            return true;
-        }
-        return false;
+
+    public void setUrl(String url){
+        this.url = url;
     }
-    /*public boolean addImage(String link){
-        try{
-            img = ImageIO.read(new URL(link));
-            return true;
-        }catch(java.net.MalformedURLException e ){
-            System.out.println("Not okay Malformed");
-            return false;
-        }catch (java.io.IOException e ){
-            System.out.println("Not okay IO");
-            return false;
-        }
+    public String getUrl(){
+        return url;
     }
-    public BufferedImage getImg(){
-        return img;
-    }*/
 }

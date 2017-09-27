@@ -4,20 +4,27 @@ package services;
  * Created by dina on 14/09/2017.
  */
 class Scores {
-    private String brukernavn;
-    private double score;
+    private String nick;
+    private int score;
 
-    public Scores(String brukernavn, double score) {
-        this.brukernavn = brukernavn;
+    public Scores(String nick, int score) {
+        this.nick = nick;
         this.score = score;
     }
     public Scores(){}
-    public String getBrukernavn() {
-        return brukernavn;
+
+    public void setNick(String nick){
+        this.nick = nick;
+    }
+    public String getNick() {
+        return nick;
     }
 
-    public double getScore() {
+    public int getScore() {
         return score;
+    }
+    public void setScore(int score){
+        this.score = score;
     }
 
 }

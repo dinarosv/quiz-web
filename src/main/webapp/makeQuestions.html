@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quizzes: Make Quiz</title>
+    <title>Quizzes: Lag Quiz</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="makeQuestions.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,13 +20,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home </a>
+                <a class="nav-link" href="index.html">Hjem</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="quizliste.html">Play quiz </a>
+                <a class="nav-link" href="quizliste.html">Spill quiz</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="makequiz.html">Make quiz <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="makequiz.html">Lag quiz</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="SeeScoreboards.html">Se scoreboards</a>
             </li>
         </ul>
     </div>
@@ -33,10 +37,10 @@
 <div class="container">
 <div id="sprs" class="form">
     <br>
-    <h5>Make questions</h5>
-    <div class="form-group">
-        <h6>Spørsmål nr. 1</h6>
-        <label for="sprs1">Spørsmål</label><input type="text" class="form-control" id="sprs1"></div>
+    <h5>Lag spørsmål</h5>
+    <h6>Spørsmål nr. 1</h6>
+    <div class="form-group"> <label for="sprs1">Spørsmål</label> <input type="text" class="form-control" id="sprs1"></div>
+    <div class="form-group"> <label for="url1">Bildeurl</label> <input type="text" class="form-control" id="url1"></div>
     <div class="form-group"> <label for="q11">Svar 1</label> <input type="text" class="form-control" id="q11"></div>
     <div class="form-group"> <label for="q21">Svar 2</label> <input type="text" class="form-control" id="q21"></div>
     <div class="form-group"> <label for="q31">Svar 3</label> <input type="text" class="form-control" id="q31"></div>
@@ -55,64 +59,5 @@
 <button type="button" id="leggtil" class="btn btn-warning">Legg til spørsmål</button>
     <button type="button" id="submit" class="btn btn-warning">Ferdig</button>
 </div>
-<script>
-    $(document).ready(function() {
-        var href = window.document.URL;
-        var del = href.split('?')[1];
-        var navn = del.split('=')[1];
-        var quizName = navn.split('&')[0];
-
-        var teller = 1;
-        $('#leggtil').click(function () {
-            teller = teller + 1;
-            $('#sprs').append(
-                '<br><br><h6>Spørsmål nr. ' + teller + '</h6>' +
-                '<label for="question">Spørsmål</label>' +
-                '<input type="text" class="form-control" id="sprs' + teller + '" placeholder="Spørsmål">' +
-                '<div class="form-group"> <label>Svar 1</label> <input type="text" class="form-control" id="q1' + teller + '">' +
-                '</div>  <div class="form-group">  <label>Svar 2</label>' +
-                '<input type="text" class="form-control" id="q2' + teller + '">' +
-                '</div> <div class="form-group"> <label>Svar 3</label> <input type="text" class="form-control" id="q3' + teller + '">' +
-                '</div> <div class="form-group"> <label>Svar 4</label> <input type="text" class="form-control" id="q4' + teller + '">' +
-
-                '</div> Riktig alternativ: <div class="form-check form-check-inline"> <label class="form-check-label">' +
-                '<input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '1" value="option1" checked> 1' +
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '2" value="option2"> 2' +
-                '</label> </div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '3" value="option3"> 3 </label>' +
-                '</div> <div class="form-check form-check-inline"> <label class="form-check-label"> <input class="form-check-input" type="radio" name="inlineRadioOptions'+teller+'" id="' + teller + '4" value="option4"> 4' +
-                '</label></div>');
-
-        });
-        $("#submit").click(function(){
-            for (var i = 1; i <= teller; i++) {
-                var question = $("#sprs"+i).val();
-                $.ajax({
-                    url: 'rest/quizzes/' + quizName,
-                    type: 'POST',
-                    data: JSON.stringify({
-                        question: question
-                    }),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json'
-                });
-                for(var j=1; j<=4; j++){
-                    var answer = $("#q"+j+i).val();
-                    var correct = $("#"+i+j).checked;
-                    $.ajax({
-                        url: 'rest/quizzes/' + quizName + '/' + question,
-                        type: 'POST',
-                        data: JSON.stringify({
-                            answer: answer,
-                            correct: correct
-                        }),
-                        contentType: 'application/json; charset=utf-8',
-                        dataType: 'json'
-                    });
-                }
-            }
-            window.location.href="quizliste.html";
-        });
-    });
-</script>
 </body>
 </html>

@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quizzes: Lag quiz</title>
+    <title>Quizzes: Se scoreboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-    <script src="makequiz.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,10 +28,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="quizliste.html">Spill quiz</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="makequiz.html">Lag quiz</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="SeeScoreboards.html">Se scoreboards</a>
             </li>
         </ul>
@@ -36,25 +39,32 @@
 </nav>
 <div class="container">
     <br>
-    <form>
-        <div class="form-group">
-            <label for="quizName">Quiznavn</label>
-            <input type="text" class="form-control" id="quizName" aria-describedby="quizName" placeholder="Oppgi quizname">
-        </div>
-        <div class="form-group">
-            <label for="time">Starttidspunkt</label>
-            <input class="form-control" type="datetime-local" id="time">
-        </div>
-        <div class="form-group">
-            <label for="tpq">Tid per spørsmål (i sekunder)</label>
-            <select class="form-control" id="tpq">
-                <option>10</option><option>20</option><option>30</option>
-            </select>
-        </div>
-        <br>
-        <button type="button" id="submit" class="btn btn-warning">Ferdig!</button>
-    </form>
+    <table id="myTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Quiz</th>
+            <th>Tidspunkt</th>
+        </tr>
+        </thead>
+    </table>
 </div>
-
+<script>
+    var navn;
+    $(document).ready(function(){
+        $.get("rest/quizzes/", function(data) {
+            for(var p in data){
+                if(data.hasOwnProperty(p)){
+                    var quiz = data[p];
+                    navn = quiz.quizName;
+                    var tidspunkt = quiz.time;
+                    $("#myTable").append('<tr onclick="klikket(\''+navn+'\')"><th>'+navn+'</th><th>'+tidspunkt+'</th></tr>');
+                }
+            }
+        });
+    });
+    function klikket(navn) {
+        window.location = "Scoreboard.html?qn=" + navn +"&br=watcher";
+    }
+</script>
 </body>
 </html>

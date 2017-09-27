@@ -7,8 +7,7 @@ public class Quiz {
     private String quizName;
     private String time;
     private String tpq; //Time per question
-    private HashMap<String, Nick> nicks = new HashMap<String, Nick>();
-    private HashMap<String, Question> questions = new HashMap<String, Question>();
+    private Question[] questions = new Question[0];
     private HashMap<String, Scores> scoreBoard = new HashMap<String, Scores>();
 
     public Quiz(String quizName, String time, String tpq){
@@ -19,13 +18,6 @@ public class Quiz {
     public Quiz(){
     }
 
-    public String getTime(){
-        return time.split("T")[0] + " " + time.split("T")[1];
-    }
-    public void setTime(String time){
-        this.time = time;
-    }
-
     public String getQuizName() {
         return quizName;
     }
@@ -33,31 +25,19 @@ public class Quiz {
         this.quizName = quizName;
     }
 
-    public Question getQuestion(String name){
-        return questions.get(name);
+    public String getTime(){
+        return time.split("T")[0] + " " + time.split("T")[1];
     }
-    public void addQuestion(Question q){
-        questions.put(q.getQuestion(), q);
+    public void setTime(String time){
+        this.time = time;
     }
 
-    public HashMap<String, Question> getQuestions() {
+    public Question[] getQuestions() {
         return questions;
     }
-    public void setQuestions(HashMap<String, Question> questions){
+    public void setQuestions(Question[] questions){
         this.questions = questions;
     }
-
-    public String getNick(String nick){
-        return nicks.get(nick).getNick();
-    }
-    public void addNick(Nick nick){
-        nicks.put(nick.getNick(), nick);
-    }
-
-    public HashMap<String, Nick> getNicks() {
-        return nicks;
-    }
-    public void setNicks(HashMap<String, Nick> nicks){ this.nicks = nicks;}
 
     public void setTpq(String tpq){
         this.tpq = tpq;
@@ -68,5 +48,13 @@ public class Quiz {
 
     public void setScoreBoard(HashMap<String, Scores> scoreBoard){ this.scoreBoard = scoreBoard; }
     public HashMap<String, Scores> getScoreBoard(){return scoreBoard;}
+
+    public void addScore(Scores scores){
+        scoreBoard.put(scores.getNick(), scores);
+    }
+    public void updateScore(Scores score){
+        int last = scoreBoard.get(score.getNick()).getScore();
+        scoreBoard.get(score.getNick()).setScore(score.getScore()+last);
+    }
 
 }

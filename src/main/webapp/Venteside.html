@@ -10,6 +10,8 @@
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="venteside.js"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,13 +25,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home </a>
+                    <a class="nav-link" href="index.html">Hjem</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="quizliste.html">Play quiz <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="quizliste.html">Spill quiz<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="makequiz.html">Make quiz</a>
+                    <a class="nav-link" href="makequiz.html">Lag quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="SeeScoreboards.html">Se scoreboards</a>
                 </li>
             </ul>
         </div>
@@ -44,64 +49,8 @@
             </tr>
             </thead>
         </table>
-        <button id="goquiz">Kjør Quiz</button>
+        <p>Trykk for å tyvstarte quizzen: </p>
+        <button type="button" class="btn btn-outline-dark btn-lg btn-block" id="goquiz">Kjør Quiz</button>
     </div>
-    <script>
-        $(document).ready(function() {
-            var href = window.document.URL;
-            var del = href.split('?')[1];
-            var navn = del.split('=')[1];
-            var quizname = navn.split('&')[0];
-            $.get("rest/quizzes/time/"+quizname, function(data){
-                window.setInterval(function(){
-                    var quizTime = new Date(data);
-                    var thisTime = new Date();
-                    var milli =  quizTime.getTime() - thisTime.getTime();
-                    var timeformat = "--";
-                    if(milli < 0){
-                        timeformat = "Quizen er over";
-                    }else if(milli > 2629746000){
-                        timeformat = "Over en måned igjen";
-                    }else if(milli > 86400000){
-                        timeformat = "Over en dag igjen ";
-                    }else if(milli > 3600000){
-                        var sek = (milli / 1000) % 60 ;
-                        var min = ((milli / (1000*60)) % 60);
-                        var timer = ((milli / (1000*60*60)) % 24);
-                        timeformat = timer.toFixed(0) + " timer, " + min.toFixed(0) + " minutter og " + sek.toFixed(0) + " sekunder"
-                    }else{
-                        var sek = (milli / 1000) % 60 ;
-                        var min = ((milli / (1000*60)) % 60);
-                        if(sek.toFixed(0)==60){
-                            sek=0;
-                        }
-                        timeformat = min.toFixed(0) + " minutter og "+ sek.toFixed(0) + " sekunder";
-                    }
-                    if(milli == 0){
-                        kjorQuiz();
-                    }
-                    $("#h5").text("Tid til start: " + timeformat);
-                }, 1000);
-            });
-            function kjorQuiz() {
-                var brukerlinje = del.split('&')[1];
-                var bruker = brukerlinje.split('=')[1];
-                window.location = "Questions.html?qn=" + quizname + "&br=" + bruker + "&numb=1";
-            }
-
-            $('#myTable').DataTable({
-                ajax: {
-                    url: 'rest/quizzes/bruker/' + quizname,
-                    dataSrc: ''
-                },
-                columns: [
-                    {data: 'nick'}
-                ]
-            });
-            $("#goquiz").click(function() {
-                kjorQuiz();
-            });
-        });
-    </script>
 </body>
 </html>

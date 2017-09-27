@@ -9,6 +9,7 @@
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="questions.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,59 +23,33 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home </a>
+                <a class="nav-link" href="index.html">Hjem</a>
             </li>
             <li class="nav-item  active">
-                <a class="nav-link" href="quizliste.html">Play quiz <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="quizliste.html">Spill quiz</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="makequiz.html">Make quiz</a>
+                <a class="nav-link" href="makequiz.html">Lag quiz</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="SeeScoreboards.html">Se scoreboards</a>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container">
     <br>
-
     <p id="tid" align="center"></p>
-    <h3 align="center">This is the question</h3>
+    <h3 id="quest" align="center"></h3>
+    <div id="bilde" align="center"></div>
     <br>
-    <button id="1" type="button" class="btn btn-outline-dark btn-lg btn-block">Answer 1</button>
-    <button id="2" type="button" class="btn btn-outline-dark btn-lg btn-block">Answer 2</button>
-    <button id="3" type="button" class="btn btn-outline-dark btn-lg btn-block">Answer 3</button>
-    <button id="4" type="button" class="btn btn-outline-dark btn-lg btn-block">Answer 4</button>
-    <br><p align="center" id="h5">You're currently playing </p>
+    <table id="myTable" class="table">
+        <tbody></tbody>
+    </table>
+    <br><p align="center" id="h5">Du spiller nå "</p>
 </div>
 <script>
-    $(document).ready(function() {
-        var href = window.document.URL;
-        var del = href.split('?')[1];
-        var quizName = del.split('=')[0];
-        var mindredel = del.split('=')[1];
-        var nick = mindredel.split('&')[0];
-        var number = mindredel.split('=')[1];
-        $("#h5").append(quizName);
-        $.get("rest/quizzes/tid/"+quizName, function(data){
-            window.setInterval(function(){
-                if(data>=10){
-                    $("#tid").text("Tid igjen: 00:" + data);
-                }else if(data>=0){
-                    $("#tid").text("Tid igjen: 00:0" + data);
-                }else{
-                    window.location = next();
-                }
-                data--;
-            }, 1000);
-        });
-        /*$.get("rest/quizzes/"+quizName", function(data){
-            var question = data[number];
-            alert(question);
-        });*/
-        function next() {
-            var nextNumb = number +1;
-            return "Questions.html?qn=" + quizName + "&br=" + nick + "&numb=" + nextNumb;
-        }
-    });
+
 </script>
 </body>
 </html>
